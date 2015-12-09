@@ -3,7 +3,9 @@ package japuzzle;
 import org.apache.commons.lang3.time.StopWatch;
 
 /**
- * 問題インターフェースです。
+ * 問題の基底クラスです。 このクラスを継承して solve() メソッドで問題を解いてください。
+ * 
+ * 
  * 
  */
 public abstract class Question {
@@ -19,7 +21,7 @@ public abstract class Question {
 	}
 
 	public void outputCurrentTime() {
-		System.out.println(String.format("かかった時間は %,3d msec.", stopWatch.getTime()));
+		System.out.println(String.format("時間は %,3d msec.", stopWatch.getTime()));
 	}
 
 	/**
