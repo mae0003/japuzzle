@@ -1,10 +1,16 @@
 package japuzzle;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class Q38 extends Question {
+public class Q38ans extends Question {
+	
+	private int count = 0;
+	private int minPoint = 7 * 9;   // 最大でも 63 を超えることがない 
+	
 	//  -
 	// | |     左のような
 	//  -      ７セグの数字がある
@@ -17,12 +23,8 @@ public class Q38 extends Question {
 	// D B
 	//  C
 	//
-	// Q. 10 個すべての数字を表示して点灯、消灯の回数が一番少なくなる順番とその時の切り替え回数を求めなさい。
-	//
-	// * 全通りの組み合わせは 3628800 通り  まずはこの組み合わせを作る
-	// * 組み合わせを作ることができたら切り替え回数を求める。
-	//   以下のコードで 0 から 1 に切り替えたときの A が変更されたかどうかがわかります。 
-	//   SegNum.Zero.flags.contains(Seg.A) ^ SegNum.ONE.flags.contains(Seg.A)
+	// * 
+
 	public enum Seg {
 		A, B, C, D, E, F, G,
 	}
@@ -54,8 +56,28 @@ public class Q38 extends Question {
 
 	@Override
 	protected void solve() {
-		// TODO 自動生成されたメソッド・スタブ
-		segPrint(SegNum.toList());
+		List<SegNum> current = new ArrayList<>();
+		createAllPattern(current);
+		System.out.println("[" + this.count +  "]");
+	}
+
+	private void createAllPattern(List<SegNum> current) {
+		SegNum.toList().forEach(item -> {
+			if(!current.contains(item)) {
+				List<SegNum> clonedCurrent = new ArrayList<>(current); 
+				clonedCurrent.add(item);
+				createAllPattern(clonedCurrent);
+			}
+		});
+		if (current.size() == 10) {
+			this.count++;
+			int thisPoint = calculatePoint(current);
+			if (thisPoint <=  minPoint) {
+				minPoint = thisPoint;
+			   System.out.println("[" + thisPoint +  "]" + String.join(" - ", current.stream().map(segs -> String.valueOf(segs.value)).collect(Collectors.toList())));
+			   segPrint(current);
+			}
+		}
 	}
 
 	private void segPrint(List<SegNum> segsList) {
@@ -85,5 +107,17 @@ public class Q38 extends Question {
 		builder.append("\r\n");
 
 		System.out.println(builder.toString());
+	}
+	
+	public int calculatePoint(List<SegNum> segList){
+		int point = 0;
+		
+		for (int i = 0; i < segList.size() - 1; i++) {
+			for( Seg seg : Seg.values()) {
+				if (segList.get(i).flags.contains(seg) ^ segList.get(i+1).flags.contains(seg)) point++;
+			}
+		}
+		
+		return point;
 	}
 }

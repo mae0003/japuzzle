@@ -3,7 +3,7 @@ package japuzzle;
 public class StartUp {
 
 	public static void main(String[] args) {
-		Question question = new Q38();
+		Question question = new Q14();
 		question.solveQuestion();
 	}
 }
