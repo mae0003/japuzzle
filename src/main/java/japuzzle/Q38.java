@@ -67,6 +67,7 @@ public class Q38 extends Question {
 		segsList.forEach(seg -> {
 			builder.append(seg.flags.contains(Seg.E) ? "| " : "  ");
 			builder.append(seg.flags.contains(Seg.A) ? "|" : " ");
+			
 			builder.append("  ");
 		});
 		builder.append("\r\n");
