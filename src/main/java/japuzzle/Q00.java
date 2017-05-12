@@ -1,6 +1,8 @@
 package japuzzle;
 
+
 import java.util.Arrays;
+import java.util.List;
 
 public class Q00 extends Question {
 
