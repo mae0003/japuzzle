@@ -10,22 +10,29 @@ import org.apache.commons.lang3.time.StopWatch;
  */
 public abstract class Question {
 
-	StopWatch stopWatch = new StopWatch();
+    public Question() {
+    }
 
-	public void solveQuestion() {
-		stopWatch.start();
-		solve();
-		stopWatch.stop();
+    StopWatch stopWatch = new StopWatch();
 
-		outputCurrentTime();
-	}
+    public void solveQuestion() {
+        stopWatch.start();
+        solve();
+        stopWatch.stop();
 
-	public void outputCurrentTime() {
-		System.out.println(String.format("時間は %,3d msec.", stopWatch.getTime()));
-	}
+        outputCurrentTime();
+    }
 
-	/**
-	 * 問題を解きます。 このメソッドを継承して問題を回答してください。
-	 */
-	abstract protected void solve();
+    public void outputCurrentTime() {
+        System.out.println(String.format("[終了時間: %,8d msec]", stopWatch.getTime()));
+    }
+
+    protected void logout(String message) {
+        System.out.println(String.format("[経過時間: %,8d msec] " + message, stopWatch.getTime()));
+    }
+
+    /**
+     * 問題を解きます。 このメソッドを継承して問題を回答してください。
+     */
+    abstract protected void solve();
 }

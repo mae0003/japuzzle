@@ -58,6 +58,7 @@ public class Q38 extends Question {
 		segPrint(SegNum.toList());
 	}
 
+	
 	private void segPrint(List<SegNum> segsList) {
 		StringBuilder builder = new StringBuilder();
 
